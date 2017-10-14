@@ -10,6 +10,22 @@ class persona
 
 /* inicio  especiales para slimFramework*/
 
+public static function AgregarMaterial($nombre, $mail, $sexo, $password){
+	$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+	$consulta =$objetoAccesoDato->RetornarConsulta(
+		"INSERT into 
+		persona (nombre, mail, sexo, password)
+		values(:nombre, :mail, :sexo, :password)"
+		);
+	$consulta->bindValue(':nombre',$nombre, PDO::PARAM_STR);
+	$consulta->bindValue(':mail',$mail, PDO::PARAM_STR);
+	$consulta->bindValue(':sexo',$sexo, PDO::PARAM_STR);
+	$consulta->bindValue(':password',$password, PDO::PARAM_STR);
+	//$consulta->bindValue(':operador',$_SESSION['usuario'], PDO::PARAM_STR);
+	$consulta->execute();
+	return "Material Agregado";
+}
+
  	public function TraerUno($request, $response, $args) {
      	$id=$args['id'];
     	$elCd=persona::TraerUnCd($id);
@@ -137,7 +153,7 @@ class persona
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,mail,sexo, password)values(:nombre,:mail,:sexo,:password)");
-				$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_INT);
+				$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
 				$consulta->bindValue(':sexo', $this->sexo, PDO::PARAM_STR);
 				$consulta->bindValue(':mail', $this->mail, PDO::PARAM_STR);
 				$consulta->bindValue(':password', $this->password, PDO::PARAM_STR);

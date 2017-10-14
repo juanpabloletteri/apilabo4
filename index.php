@@ -25,49 +25,53 @@ $app = new \Slim\App(["settings" => $config]);
 
 //require_once "saludo.php";
 
+///////////////////////////////////
+$app->post('/agregarmaterial', function (Request $request, Response $response) {  
+    $nombre = $request->getParam("nombre");
+    $mail = $request->getParam("mail");
+    $sexo = $request->getParam("sexo");
+    $password = $request->getParam("password");
+    $response = persona::AgregarMaterial($nombre, $mail, $sexo, $password);
+    return $response;
+});/////////////////////////////////////////
 
-$app->get('[/]', function (Request $request, Response $response) {    
+$app->get('[/]', function (Request $request, Response $response) {
     $response->getBody()->write("GET => Bienvenido!!! ,a SlimFramework");
     return $response;
-
 });
 
-$app->post('[/]', function (Request $request, Response $response) {   
+$app->post('[/]', function (Request $request, Response $response) {
     $response->getBody()->write("POST => Bienvenido!!! ,a SlimFramework");
     return $response;
-
 });
 
-$app->put('[/]', function (Request $request, Response $response) {  
+$app->put('[/]', function (Request $request, Response $response) {
     $response->getBody()->write("PUT => Bienvenido!!! ,a SlimFramework");
     return $response;
-
 });
 
-$app->delete('[/]', function (Request $request, Response $response) {  
+$app->delete('[/]', function (Request $request, Response $response) {
     $response->getBody()->write(" DELETE => Bienvenido!!! ,a SlimFramework");
     return $response;
-
 });
 
 
 
-$app->get('/datos/', function (Request $request, Response $response) {     
+$app->get('/datos/', function (Request $request, Response $response) {
     $datos = array('nombre' => 'rogelio','apellido' => 'agua', 'edad' => 40);
-    $newResponse = $response->withJson($datos, 200);  
+    $newResponse = $response->withJson($datos, 200);
     return $newResponse;
 });
 
-$app->post('/datos/', function (Request $request, Response $response) {    
+$app->post('/datos/', function (Request $request, Response $response) {
     $ArrayDeParametros = $request->getParsedBody();
    // var_dump($ArrayDeParametros);
     $objeto= new stdclass();
     $objeto->nombre=$ArrayDeParametros['nombre'];
     $objeto->apellido=$ArrayDeParametros['apellido'];
     $objeto->edad=$ArrayDeParametros['edad'];
-    $newResponse = $response->withJson($objeto, 200);  
+    $newResponse = $response->withJson($objeto, 200);
     return $newResponse;
-
 });
 
 /* atender todos los verbos de HTTP*/
@@ -99,12 +103,11 @@ $app->group('/saludo', function () {
 
      $this->get('/', function ($request, $response, $args) {
         $response->getBody()->write("HOLA, Bienvenido a la apirest de 'CDs'... ingresá tu nombre");
-    });
+     });
  
-     $this->post('/', function ($request, $response, $args) {      
+     $this->post('/', function ($request, $response, $args) {
         $response->getBody()->write("HOLA, Bienvenido a la apirest por post");
-    });
-     
+     });
 });
 
 
@@ -124,47 +127,47 @@ $app->group('/usuario/{id:[0-9]+}', function () {
 
 
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
-$app->group('/persona', function () {   
+$app->group('/persona', function () {
 
-$this->get('/', \persona::class . ':traerTodos');
-$this->get('/{id}', \persona::class . ':traerUno');
-$this->delete('/', \personacd::class . ':BorrarUno');
-$this->put('/', \persona::class . ':ModificarUno');
+    $this->get('/', \persona::class . ':traerTodos');
+    $this->get('/{id}', \persona::class . ':traerUno');
+    $this->delete('/', \personacd::class . ':BorrarUno');
+    $this->put('/', \persona::class . ':ModificarUno');
 //se puede tener funciones definidas
 /*SUBIDA DE ARCHIVO*/
-$this->post('/', function (Request $request, Response $response) {
+    $this->post('/', function (Request $request, Response $response) {
   
     
-    $ArrayDeParametros = $request->getParsedBody();
-    //var_dump($ArrayDeParametros);
-    $titulo= $ArrayDeParametros['titulo'];
-    $cantante= $ArrayDeParametros['cantante'];
-    $año= $ArrayDeParametros['anio'];
-    
-    $micd = new persona();
-    $micd->titulo=$titulo;
-    $micd->cantante=$cantante;
-    $micd->año=$año;
-    $micd->InsertarElCdParametros();
+        $ArrayDeParametros = $request->getParsedBody();
+        //var_dump($ArrayDeParametros);
+        $nombre= $ArrayDeParametros['nombre'];
+        $mail= $ArrayDeParametros['mail'];
+        $sexo= $ArrayDeParametros['sexo'];
+        $password= $ArrayDeParametros['password'];
 
-    $archivos = $request->getUploadedFiles();
-    $destino="./fotos/";
-    //var_dump($archivos);
-    //var_dump($archivos['foto']);
+        $micd = new persona();
+        $micd->nombre=$nombre;
+        $micd->mail=$mail;
+        $micd->sexo=$sexo;
+        $micd->password=$password;
+        $micd->InsertarElCdParametros();
 
-    $nombreAnterior=$archivos['foto']->getClientFilename();
-    $extension= explode(".", $nombreAnterior)  ;
-    //var_dump($nombreAnterior);
-    $extension=array_reverse($extension);
+        /*
+        $archivos = $request->getUploadedFiles();
+        $destino="./fotos/";
+        //var_dump($archivos);
+        //var_dump($archivos['foto']);
 
-    $archivos['foto']->moveTo($destino.$titulo.".".$extension[0]);
-    $response->getBody()->write("cd");
+        $nombreAnterior=$archivos['foto']->getClientFilename();
+        $extension= explode(".", $nombreAnterior)  ;
+        //var_dump($nombreAnterior);
+        $extension=array_reverse($extension);
 
-    return $response;
-
-});
-
-     
+        $archivos['foto']->moveTo($destino.$titulo.".".$extension[0]);
+        $response->getBody()->write("cd");
+        */
+        return $response;
+    });
 });
 
 

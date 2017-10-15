@@ -176,7 +176,7 @@ public static function AgregarMaterial($nombre, $mail, $sexo, $password){
   	public static function TraerTodoLosCds()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, mail as mail,sexo as sexo, password as password from persona");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
 			$consulta->execute();			
 			return $consulta->fetchAll(PDO::FETCH_CLASS, "persona");		
 	}

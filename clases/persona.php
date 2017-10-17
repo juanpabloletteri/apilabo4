@@ -23,8 +23,21 @@ public static function AgregarMaterial($nombre, $mail, $sexo, $password){
 	$consulta->bindValue(':password',$password, PDO::PARAM_STR);
 	//$consulta->bindValue(':operador',$_SESSION['usuario'], PDO::PARAM_STR);
 	$consulta->execute();
-	return "Material Agregado";
+	return "Persona Agregada";
 }
+
+public static function EliminarMaterial($id)
+{
+	$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+	$consulta =$objetoAccesoDato->RetornarConsulta(
+		"DELETE from persona
+		WHERE id=:id"
+		);
+	$consulta->bindValue(':id',$id, PDO::PARAM_STR);
+	$consulta->execute();
+	return "Persona Eliminada";
+}
+
 
  	public function TraerUno($request, $response, $args) {
      	$id=$args['id'];

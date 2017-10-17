@@ -40,7 +40,12 @@ $app->get('/tablamateriales', function (Request $request, Response $response) {
     return $response;
 });
 //////////////////////////////////////////////
-
+$app->post('/eliminarmaterial', function (Request $request, Response $response) {  
+    $id = $request->getParam("id");
+    $response = persona::EliminarMaterial('id');
+    return $response;
+});
+///////////////////////////////////
 $app->get('[/]', function (Request $request, Response $response) {
     $response->getBody()->write("GET => Bienvenido!!! ,a SlimFramework");
     return $response;
@@ -67,7 +72,7 @@ $app->group('/persona', function () {
 
     $this->get('/', \persona::class . ':traerTodos');
     $this->get('/{id}', \persona::class . ':traerUno');
-    $this->delete('/', \personacd::class . ':BorrarUno');
+    $this->delete('/{id}', \personacd::class . ':BorrarUno');
     $this->put('/', \persona::class . ':ModificarUno');
 //se puede tener funciones definidas
 /*SUBIDA DE ARCHIVO*/

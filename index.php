@@ -42,7 +42,7 @@ $app->get('/tablamateriales', function (Request $request, Response $response) {
 //////////////////////////////////////////////
 $app->post('/eliminarmaterial', function (Request $request, Response $response) {  
     $id = $request->getParam("id");
-    $response = persona::EliminarMaterial('id');
+    $response = persona::EliminarMaterial($id);
     return $response;
 });
 ///////////////////////////////////

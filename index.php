@@ -26,23 +26,23 @@ $app = new \Slim\App(["settings" => $config]);
 //require_once "saludo.php";
 
 ///////////////////////////////////
-$app->post('/agregarmaterial', function (Request $request, Response $response) {  
+$app->post('/agregarpersona', function (Request $request, Response $response) {  
     $nombre = $request->getParam("nombre");
     $mail = $request->getParam("mail");
     $sexo = $request->getParam("sexo");
     $password = $request->getParam("password");
-    $response = persona::AgregarMaterial($nombre, $mail, $sexo, $password);
+    $response = persona::AgregarPersona($nombre, $mail, $sexo, $password);
     return $response;
 });
 ///////////////////////////////////
-$app->get('/tablamateriales', function (Request $request, Response $response) {  
+$app->get('/tablapersonas', function (Request $request, Response $response) {  
     $response = persona::traerTodos();
     return $response;
 });
 //////////////////////////////////////////////
-$app->post('/eliminarmaterial', function (Request $request, Response $response) {  
+$app->post('/eliminarpersona', function (Request $request, Response $response) {  
     $id = $request->getParam("id");
-    $response = persona::EliminarMaterial($id);
+    $response = persona::EliminarPersona($id);
     return $response;
 });
 ///////////////////////////////////

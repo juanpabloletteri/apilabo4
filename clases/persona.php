@@ -10,7 +10,7 @@ class persona
 
 /* inicio  especiales para slimFramework*/
 
-public static function AgregarMaterial($nombre, $mail, $sexo, $password){
+public static function AgregarPersona($nombre, $mail, $sexo, $password){
 	$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 	$consulta =$objetoAccesoDato->RetornarConsulta(
 		"INSERT into 
@@ -26,7 +26,7 @@ public static function AgregarMaterial($nombre, $mail, $sexo, $password){
 	return "Persona Agregada";
 }
 
-public static function EliminarMaterial($id)
+public static function EliminarPersona($id)
 {
 	$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 	$consulta =$objetoAccesoDato->RetornarConsulta(
@@ -46,7 +46,7 @@ public static function EliminarMaterial($id)
     	return $newResponse;
     }
      public function TraerTodos($request, $response, $args) {
-      	$todosLosCds=persona::TraerTodoLosCds();
+      	$todosLosCds=persona::TraerTodo();
      	$newResponse = $response->withJson($todosLosCds, 200);  
     	return $newResponse;
     }
@@ -186,7 +186,7 @@ public static function EliminarMaterial($id)
 	 }
 
 
-  	public static function TraerTodoLosCds()
+  	public static function TraerTodo()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
